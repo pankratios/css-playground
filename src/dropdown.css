@@ -1,0 +1,95 @@
+body {
+  font-family: sans-serif;
+}
+.select {
+  box-sizing: border-box;
+  display: block;
+}
+.select__control {
+  box-sizing: border-box;
+
+  list-style-type: none;
+
+  width: calc(100% - 16px);
+  max-height: 0;
+
+  margin: -1px auto 0 auto;
+  padding: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background-color: transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  transition: max-height 100ms linear;
+}
+.select__option {
+  box-sizing: border-box;
+  display: block;
+
+  background-color: #333;
+}
+.select__option__label {
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+
+  height: calc(1rem + 0.5rem + 1rem);
+
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  line-height: 1.5;
+  color: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  user-select: none
+}
+.select__option__label--selector {
+  background-color: white;
+
+  border-radius: 8px;
+  border: 1px solid gray;
+
+  color: #333;
+}
+.select__checker {
+  margin: 0;
+
+  position: absolute;
+  left: -20px;
+}
+.select__option__input {
+  opacity: 0;
+
+  width: 20px;
+  margin: 0;
+  margin-inline-start: -20px;
+  padding: 0;
+}
+.select__option__checkmark {
+  margin-inline-end: 0.5rem;
+  visibility: hidden;
+}
+.select:focus-within .select__option__label--selector {
+  box-shadow: 0px 0px 5px 1px darkgrey;
+}
+.select__option--selectable:focus-within {
+  opacity: 0.8;
+}
+.select .select__checker:checked ~ .select__control {
+  max-height: 50vh;
+}
+.select__option--selectable:hover {
+  background-color: #0044ff;
+}
+
+.select__option .select__option__input:checked + .select__option__checkmark {
+  visibility: visible;
+}
