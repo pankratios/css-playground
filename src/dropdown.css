@@ -7,6 +7,8 @@ body {
 }
 .select__control {
   box-sizing: border-box;
+  display: block;
+  visibility: hidden;
 
   list-style-type: none;
 
@@ -77,6 +79,7 @@ body {
   margin-inline-end: 0.5rem;
   visibility: hidden;
 }
+.select:active .select__option__label--selector,
 .select:focus-within .select__option__label--selector {
   box-shadow: 0px 0px 5px 1px darkgrey;
 }
@@ -84,7 +87,9 @@ body {
   opacity: 0.8;
 }
 .select .select__checker:checked ~ .select__control {
+  display: block;
   max-height: 50vh;
+  visibility: visible;
 }
 .select__option--selectable:hover {
   background-color: #0044ff;
