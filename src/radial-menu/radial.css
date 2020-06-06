@@ -1,74 +1,197 @@
+:root {
+  --dot-size: 60px;
+  --half-dot-size: var(--dot-size) * 0.5;
+  --container-size: 280px;
+  --pos: calc(var(--container-size) * 0.5 - var(--half-dot-size));
+  --rot-dur: 200ms;
+  --dur: 300ms;
+  --rot-offset: calc(var(--dur) - var(--rot-dur));
+  --rot-courve: linear; /*ease-out;*/
+  --trans-rot-courve: linear; /*cubic-bezier(.67,0,.74,.76);*/
+}
+
 body {
   font-family: sans-serif;
 }
-
 .rm {
   box-sizing: border-box;
   position: relative;
-
-  width: 300px;
-  height: 150px;
-
+  width: var(--container-size);
+  height: var(--container-size);
   margin: 10rem auto 0 auto;
-}
 
-.rm-mask {
-  overflow: hidden;
-
-  width: 100%;
-  height: 100%;
+  contain: strict;
 }
-.rm-circle {
+.rm.rm--spread {
+  --action-anim-in: action-spread-in;
+  --action-anim-out: action-spread-out;
+}
+.rm.rm--rot {
+  --start-rot: 45deg;
+  --start-counter-rot: calc(var(--start-rot) * -1);
+  --action-anim-in: action-rot-in;
+  --action-anim-out: action-rot-out;
+}
+.rm__commander {
   box-sizing: border-box;
-
-  width: 300px;
-  height: 300px;
-
-  border-radius: 50%;
-
-  background-color: red;
-
-  transform: scale3d(0, 0, 0);
-}
-.rm-commander-input {
-  margin: 0;
-
   position: absolute;
-  left: -20px;
-
-  visibility: hidden;
-}
-.rm-commander-input:checked ~ .rm-mask .rm-circle {
-  transform: scale3d(1, 1, 1);
-
-  transition: transform 300ms ease-out;
-}
-.rm-commander {
-  display: block;
-  position: absolute;
-  bottom: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  box-sizing: border-box;
-  width: 50px;
-  height: 50px;
+  z-index: 1000;
+  bottom: var(--pos);
+  left: var(--pos);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  transform-origin: var(--half-dot-size);
+  transition: transform var(--dur) var(--rot-courve);
 
   border-radius: 50%;
   background-color: #000;
+
+  contain: strict;
 }
-.rm-commander:hover {
-  background-color: #555;
+.rm__commander__input {
+  position: absolute;
+  left: -20px;
+  margin: 0;
+  contain: strict;
+
+  visibility: hidden;
+}
+.rm__option {
+  box-sizing: border-box;
+  position: absolute;
+  width: var(--container-size);
+  height: var(--container-size);
+  transition: transform var(--rot-dur) var(--rot-courve);
+  contain: strict;
+}
+.rm.rm--rot .rm__option {
+  transform: rotate3d(0, 0, 1, var(--start-rot));
+}
+.rm.rm--spread .rm__option {
+  transform: rotate3d(0, 0, 1, var(--angle));
+}
+.rm__option__action {
+  box-sizing: border-box;
+  position: absolute;
+  width: var(--dot-size);
+  height: var(--dot-size);
+
+  border-radius: 50%;
+  background-color: #333;
+
+  contain: strict;
+
+  /* use animation to move and then rotate, what is not possible with transitions */
+  animation-timing-function: var(--trans-rot-courve);
+  animation-duration: var(--dur);
+  animation-delay: 0ms;
+  animation-direction: normal;
+  animation-name: var(--action-anim-out);
+  animation-fill-mode: forwards;
+}
+.rm.rm--spread .rm__option__action {
+  --counter-angle: calc(var(--angle) * -1);
+  transform: translate3d(var(--pos), var(--pos), 0) rotate3d(0, 0, 1, var(--counter-angle));
+}
+.rm.rm--rot .rm__option__action {
+  transform: translate3d(var(--pos), var(--pos), 0) rotate3d(0, 0, 1, var(--start-counter-rot));
+}
+.rm__action__label {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  display: block;
+  vertical-align: middle;
+  line-height: var(--dot-size);
+  text-align: center;
+
+  user-select: none;
+}
+.rm__commander__input:checked ~ .rm__option {
+  transform: rotate3d(0, 0, 1, var(--angle));
+  transition: transform var(--rot-dur) var(--trans-rot-courve) var(--rot-offset)
+}
+.rm__commander__input:checked ~ .rm__option .rm__option__action {
+  animation-name: var(--action-anim-in);
+}
+.rm__commander__input:checked ~ .rm__commander {
+  transform: rotate3d(0, 0, 1, 225deg);
+}
+.tx {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  contain: strict;
+}
+.tx__bar {
+  box-sizing: border-box;
+  height: 6px;
+  transform-origin: 12px 12px;
+  contain: strict;
+
+  border-radius: 2px;
+  background-color: #fff;
+}
+.tx__bar--top {
+  transform: translate3d(0px, 9px, 0px) rotate3d(0, 0, 1, 0deg);
+}
+.tx__bar--bottom {
+  transform: translate3d(-9px, -6px, 0px) rotate3d(0, 0, 1, 90deg);
 }
 
-.rm-option {
-  width: 50px;
-  height: 50px;
-
-  background-color: red;
+/* .tx__bar--top { */
+/*   transform: translate3d(-10px, -2px, 0px); */
+/*   /\* transform: translate3d(-10px, 0px, 0px) rotate3d(0, 0, 1, 45deg); *\/ */
+/* } */
+/* .tx__bar--bottom { */
+/*   transform: translate3d(-10px, 2px, 0px); */
+/*   /\* transform: translate3d(-10px, -4px, 0px) rotate3d(0, 0, 1, -45deg); *\/ */
+/* } */
+/* .rm__commander__input:checked ~ .rm__commander .tx__bar--top { */
+/*   transform: translate3d(-10px, 0px, 0px) rotate3d(0, 0, 1, 45deg); */
+/* } */
+/* .rm__commander__input:checked ~ .rm__commander .tx__bar--bottom { */
+/*   transform: translate3d(-10px, -4px, 0px) rotate3d(0, 0, 1, -45deg); */
+/* } */
+@keyframes action-rot-in {
+  0% {
+    transform: translate3d(var(--pos), var(--pos), 0px) rotate3d(0, 0, 1, var(--start-counter-rot));
+  }
+  25% {
+    transform: translate3d(0px, var(--pos), 0px) rotate3d(0, 0, 1, var(--start-counter-rot));
+  }
+  100% {
+    transform: translate3d(0px, var(--pos), 0px) rotate3d(0, 0, 1, calc(var(--angle) * -1));
+  }
 }
-
-.rm-option--45 {
-  transform: translate(-100px);
-  transform-origin: 0 0;
+@keyframes action-rot-out {
+  0% {
+    transform: translate3d(0px, var(--pos), 0px) rotate3d(0, 0, 1, calc(var(--angle) * -1));
+  }
+  75% {
+    transform: translate3d(0px, var(--pos), 0px) rotate3d(0, 0, 1, var(--start-counter-rot));
+  }
+  100% {
+    transform: translate3d(var(--pos), var(--pos), 0px) rotate3d(0, 0, 1, var(--start-counter-rot));
+  }
+}
+@keyframes action-spread-out {
+  0% {
+    transform: translate3d(0px, var(--pos), var(--pos)) rotate3d(0, 0, 1, var(--counter-angle));
+  }
+  100% {
+    transform: translate3d(0px, var(--pos), 0px)) rotate3d(0, 0, 1, var(--counter-angle));
+  }
+}
+@keyframes action-spread-in {
+  0% {
+    transform: translate3d(0px, var(--pos), 0px)) rotate3d(0, 0, 1, var(--counter-angle));
+  }
+  100% {
+    transform: translate3d(0px, var(--pos), var(--pos)) rotate3d(0, 0, 1, var(--counter-angle));
+  }
 }

@@ -3,28 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
     <title>Radial menu</title>
-    <link rel="stylesheet" href="radial-chrome.css" />
+    <link rel="stylesheet" href="radial.css" />
   </head>
   <body>
-    <div class="rm">
-      <input id="commander-input" type="checkbox" class="rm-commander-input" />
-      <div class="rm-mask">
-        <div class="rm-circle">
-          <div class="rm-option rm-option--0"></div>
-          <div class="rm-option rm-option--45"></div>
-          <div class="rm-option rm-option--90"></div>
-          <div class="rm-option rm-option--135"></div>
-          <div class="rm-option rm-option--180"></div>
+    <div class="rm rm--rot">
+      <input
+        id="commander-input"
+        type="checkbox"
+        class="rm__commander__input"
+      />
+      <div class="rm__option" style="--angle: -45deg;"
+        ><div class="rm__option__action"
+          ><label class="rm__action__label">A</label></div
+        ></div
+      >
+      <div class="rm__option" style="--angle: 0deg;"
+        ><div class="rm__option__action"
+          ><label class="rm__action__label">B</label></div
+        ></div
+      >
+      <div class="rm__option" style="--angle: 45deg;"
+        ><div class="rm__option__action"
+          ><label class="rm__action__label">C</label></div
+        ></div
+      >
+      <div class="rm__option" style="--angle: 90deg;"
+        ><div class="rm__option__action"
+          ><label class="rm__action__label">D</label></div
+        ></div
+      >
+      <label for="commander-input" class="rm__commander">
+        <div class="tx">
+          <div class="tx__bar tx__bar--top"></div>
+          <div class="tx__bar tx__bar--bottom"></div>
         </div>
-      </div>
-      <div class="rm-option rm-option--0"></div>
-      <div class="rm-option rm-option--45"></div>
-      <div class="rm-option rm-option--90"></div>
-      <div class="rm-option rm-option--135"></div>
-      <div class="rm-option rm-option--180"></div>
-      <label for="commander-input" class="rm-commander"> </label>
+      </label>
     </div>
   </body>
 </html>
