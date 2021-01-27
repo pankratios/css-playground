@@ -86,6 +86,7 @@ body {
 .select__option--selectable:focus-within {
   opacity: 0.8;
 }
+/*.select:focus-within .select__checker:checked ~ .select__control { // <<-- problem with that is on the first click (when the select not already has the focus) it does only get the focus but doesn't open the dropdown */
 .select .select__checker:checked ~ .select__control {
   display: block;
   max-height: 50vh;

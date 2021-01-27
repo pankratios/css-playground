@@ -1,11 +1,9 @@
 :root {
-  --dot-size: 60px;
+  --dot-size: 80px;
   --half-dot-size: var(--dot-size) * 0.5;
-  --container-size: 280px;
+  --container-size: 300px;
   --pos: calc(var(--container-size) * 0.5 - var(--half-dot-size));
-  --rot-dur: 200ms;
   --dur: 300ms;
-  --rot-offset: calc(var(--dur) - var(--rot-dur));
   --rot-courve: linear; /*ease-out;*/
   --trans-rot-courve: linear; /*cubic-bezier(.67,0,.74,.76);*/
 }
@@ -27,10 +25,12 @@ body {
   --action-anim-out: action-spread-out;
 }
 .rm.rm--rot {
-  --start-rot: 45deg;
+  --start-rot: 0deg;
   --start-counter-rot: calc(var(--start-rot) * -1);
   --action-anim-in: action-rot-in;
   --action-anim-out: action-rot-out;
+  --rot-dur: 200ms;
+  --rot-offset: calc(var(--dur) - var(--rot-dur));
 }
 .rm__commander {
   box-sizing: border-box;
